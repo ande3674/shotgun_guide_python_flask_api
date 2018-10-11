@@ -2,8 +2,13 @@
 
 {% block content %}
 
-<h1>Here is the city you want:</h1>
+<h1>Here is the city you will visit:</h1>
 <h2>{{ city }}</h2>
-
+<br>
+<h2>Weather:</h2>
+<h3>{{ key }} : {{ description }}</h3>
+<h3>Current temperature: {{ temp }} F</h3>
+<br>
+<h1>Enjoy your trip!</h1>
 
 {%  endblock %}
