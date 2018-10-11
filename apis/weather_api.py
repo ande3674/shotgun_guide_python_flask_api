@@ -1,11 +1,26 @@
 import requests
+import pyowm
 # OpenWeatherMap API
+# https://openweathermap.org/appid#get
 KEY = '8faf8df6a0906553e13e8a6689203f78'
 URL_TEMPLATE_BY_ID = 'http://api.openweathermap.org/data/2.5/forecast?id={CITYID}&APPID=8faf8df6a0906553e13e8a6689203f78'
 URL_TEMPLATE_BY_ZIP = 'http://api.openweathermap.org/data/2.5/forecast?zip={CITYZIP}&APPID=8faf8df6a0906553e13e8a6689203f78'
 mpls_url = 'http://api.openweathermap.org/data/2.5/forecast?id=524901&APPID=8faf8df6a0906553e13e8a6689203f78'
+owm = pyowm.OWM(KEY)
 
+def get_weather_at_place(place):
+    obs = owm.weather_at_place(place)
+    w = obs.get_weather()
+    return w
 
+def get_weather_at_coords(lat, lon):
+    obs = owm.weather_around_coords(lat, lon)
+    w = obs[0].get_weather()
+    return w
+
+#################
+### TEST CODE ###
+#################
 def get_city(url):
     response = requests.get(url).json()
     return response['city']['name']
@@ -23,7 +38,6 @@ def get_weather(url):
 def convert_to_fahrenheit(kel):
     return (1.8 * (kel - 273)) + 32
 
-### TEST CODE ###
 def print_current_weather(city, w):
     #city = get_city(URL_TEMPLATE_BY_ZIP.format(CITYZIP=57101))
     #w = get_weather(URL_TEMPLATE_BY_ZIP.format(CITYZIP=57101))
@@ -31,4 +45,20 @@ def print_current_weather(city, w):
     print(w['key'] + ': ' + w['description'])
     print('Current temp is ' + str(w['temp']))
     print('Today\'s max temp: ' + str(w['max']) + ', min temp: ' + str(w['min']))
+
+w = get_weather_at_place('Paris, France')
+print(w)
+print(w.get_status())
+print(w.get_detailed_status())
+print(w.get_temperature('fahrenheit')['temp'])
+print(w.get_temperature('fahrenheit')['temp_max'])
+print(w.get_temperature('fahrenheit')['temp_min'])
+
+x= get_weather_at_coords(42.5, -90.5)
+print(x)
+print(x.get_status())
+print(x.get_detailed_status())
+print(x.get_temperature('fahrenheit')['temp'])
+print(x.get_temperature('fahrenheit')['temp_max'])
+print(x.get_temperature('fahrenheit')['temp_min'])
 
