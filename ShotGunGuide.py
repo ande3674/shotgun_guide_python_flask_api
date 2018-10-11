@@ -1,5 +1,5 @@
 from flask import Flask, request, render_template
-from apis import weather_api
+from apis import weather_api, maps_api
 
 app = Flask(__name__)
 URL_TEMPLATE_BY_ZIP = 'http://api.openweathermap.org/data/2.5/forecast?zip={CITYZIP}&APPID=8faf8df6a0906553e13e8a6689203f78'
@@ -14,8 +14,10 @@ def get_trip():
     dest = request.args.get('destination')
     ostatus1, ostatus2, otemp = weather_api.get_statuses_and_temp_at_place(origin)
     dstatus1, dstatus2, dtemp = weather_api.get_statuses_and_temp_at_place(dest)
-    return render_template('trip.html', city1=origin, key1=ostatus1, description1=ostatus2, temp1=otemp,
-                           city2=dest, key2=dstatus1, description2=dstatus2, temp2=dtemp)
+    ourl = maps_api.get_static_map_of_place(origin)
+    durl = maps_api.get_static_map_of_place(dest)
+    return render_template('trip.html', city1=origin, key1=ostatus1, description1=ostatus2, temp1=otemp, url1=ourl,
+                           city2=dest, key2=dstatus1, description2=dstatus2, temp2=dtemp, url2=durl)
 
 @app.route('/city')
 def get_city():

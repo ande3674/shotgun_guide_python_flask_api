@@ -7,13 +7,28 @@ MAPQUEST_SECRET = 'BAIytvgECoeYE8EK'
 
 DIRECTIONS_URL_TEMPLATE = 'https://maps.googleapis.com/maps/api/directions/json?origin={ORIGIN}' \
                          '&destination={DESTINATION}&key=AIzaSyCUzzNpRfSkRPbdOHtrjnlfCaCZ26cNKnc'
-
+STATIC_MAP_URL = 'https://maps.googleapis.com/maps/api/staticmap?center={CENTER}' \
+                 '&zoom={ZOOM}&size=600x400&maptype={TYPE}&key=AIzaSyCUzzNpRfSkRPbdOHtrjnlfCaCZ26cNKnc' #types:roadmap, satellite, hybrid, terrain,
 DIRECTIONS_URL_EXAMPLE1 = 'https://maps.googleapis.com/maps/api/directions/json?origin=44.9778,93.2650' \
                          '&destination=25.7617,80.1918&key=AIzaSyCUzzNpRfSkRPbdOHtrjnlfCaCZ26cNKnc'
 DIRECTIONS_URL_EXAMPLE2 = 'https://maps.googleapis.com/maps/api/directions/json?origin=minneapolis&destination=miami&key=AIzaSyCUzzNpRfSkRPbdOHtrjnlfCaCZ26cNKnc'
 
 #https://maps.googleapis.com/maps/api/directions/json?origin=Toronto&destination=Montreal&key=AIzaSyCUzzNpRfSkRPbdOHtrjnlfCaCZ26cNKnc
+def get_static_map_of_place(place):
+    place = split_up(place)
+    url = STATIC_MAP_URL.format(CENTER=place, ZOOM=10, TYPE='roadmap')
+    #response = requests.get(url)
+    return url
 
+def split_up(s):
+    split = s.split(" ")
+    return_string = ''
+    for i in range(len(split)):
+        if i == len(split)-1:
+            return_string += split[i]
+        else:
+            return_string += (split[i] + '+')
+    return return_string
 
 def get_directions(url):
     response = requests.get(url).json()
