@@ -1,0 +1,14 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<h1>Welcome to Shot Gun Guide</h1>
+
+<h2>Enter a city:</h2>
+
+<form action="/city" method="GET">
+Destination: <input type="text" name="city"><br>
+<input type="submit" value="Submit">
+</form>
+
+{% endblock %}
