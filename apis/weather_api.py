@@ -18,6 +18,29 @@ def get_weather_at_coords(lat, lon):
     w = obs[0].get_weather()
     return w
 
+def get_lon_lat_for_place(place):
+    obs = owm.weather_at_place(place)
+    lon = obs.get_lon()
+    lat = obs.get_lat()
+    return lon, lat
+
+def get_statuses_and_temp_at_place(place):
+    obs = owm.weather_at_place(place)
+    w = obs.get_weather()
+    status = w.get_status()
+    det_status = w.get_detailed_status()
+    temp = w.get_temperature('fahrenheit')['temp']
+    return status, det_status, temp
+
+def get_statuses_and_temp_at_coords(lon, lat):
+    obs = owm.weather_around_coords(lon, lat)
+    w = obs[0].get_weather()
+    status = w.get_status()
+    det_status = w.get_detailed_status()
+    temp = w.get_temperature('fahrenheit')['temp']
+    return status, det_status, temp
+
+
 #################
 ### TEST CODE ###
 #################

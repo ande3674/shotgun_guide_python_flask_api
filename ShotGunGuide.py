@@ -8,6 +8,15 @@ URL_TEMPLATE_BY_ZIP = 'http://api.openweathermap.org/data/2.5/forecast?zip={CITY
 def home():
     return render_template('index.html')
 
+@app.route('/trip')
+def get_trip():
+    origin = request.args.get('origin')
+    dest = request.args.get('destination')
+    ostatus1, ostatus2, otemp = weather_api.get_statuses_and_temp_at_place(origin)
+    dstatus1, dstatus2, dtemp = weather_api.get_statuses_and_temp_at_place(dest)
+    return render_template('trip.html', city1=origin, key1=ostatus1, description1=ostatus2, temp1=otemp,
+                           city2=dest, key2=dstatus1, description2=dstatus2, temp2=dtemp)
+
 @app.route('/city')
 def get_city():
     # get the user entry from the form
