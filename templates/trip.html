@@ -29,4 +29,17 @@
 <br>
 <h1>Enjoy your trip!</h1>
 
+
+<h1>Here are your stops for this trip</h1>
+<ol>
+{%  for stop in stops %}
+        <li>{{ stop.name }}</li>
+        <img src="{{ stop.url }}">
+        <h3> Weather in {{ stop.name }}:</h3>
+        <h3>{{ stop.key }} : {{ stop.description }}</h3>
+        <h3>Temperature: {{ stop.temp }} F</h3>
+{% endfor %}
+</ol>
+
+
 {%  endblock %}

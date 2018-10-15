@@ -32,7 +32,7 @@ def get_statuses_and_temp_at_place(place):
     temp = w.get_temperature('fahrenheit')['temp']
     return status, det_status, temp
 
-def get_statuses_and_temp_at_coords(lon, lat):
+def get_statuses_and_temp_at_coords(lat, lon):
     obs = owm.weather_around_coords(lat, lon)
     w = obs[0].get_weather()
     status = w.get_status()

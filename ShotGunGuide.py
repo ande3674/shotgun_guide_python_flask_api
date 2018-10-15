@@ -28,18 +28,37 @@ def get_trip():
     ourl = maps_api.get_static_map_of_place(origin)
     durl = maps_api.get_static_map_of_place(dest)
 
-    # get info about a point along the way
+     # get info about a point along the way
     midway_step = maps_api.get_directions(origin, dest)
     midway_lat, midway_lon = maps_api.get_midway_location(midway_step)
-    # get the closest city to this place! TODO
-    mplace = bing_api.reverse_geocode_place(midway_lon, midway_lat)
+     # get the closest city to this place
+    mplace = bing_api.reverse_geocode_place(midway_lat, midway_lon)
+     # get weather
+    mstatus1, mstatus2, mtemp = weather_api.get_statuses_and_temp_at_coords(midway_lat, midway_lon)
+    murl = maps_api.get_static_map_of_coords(midway_lat, midway_lon)
 
-    mstatus1, mstatus2, mtemp = weather_api.get_statuses_and_temp_at_coords(midway_lon, midway_lat)
-    murl = maps_api.get_static_map_of_coords(midway_lon, midway_lat)
+    stops = maps_api.get_stops(origin, dest)
+    stop_data_list = []
+    for s in stops:
+        lat = s[0]
+        lon = s[1]
+        place_name=bing_api.reverse_geocode_place(lat, lon)
+        status1, status2, temp = weather_api.get_statuses_and_temp_at_coords(lat, lon)
+        url = maps_api.get_static_map_of_coords(lat, lon)
+        stop_data = {}
+        stop_data['name']=place_name
+        stop_data['key'] = status1
+        stop_data['description'] = status2
+        stop_data['temp'] = temp
+        stop_data['url'] = url
+        stop_data_list.append(stop_data)
 
     return render_template('trip.html', city1=origin, key1=ostatus1, description1=ostatus2, temp1=otemp, url1=ourl,
                            city2=dest, key2=dstatus1, description2=dstatus2, temp2=dtemp, url2=durl,
-                           city3=mplace, key3=mstatus1, description3=mstatus2, temp3=mtemp, url3=murl)
+                           city3=mplace, key3=mstatus1, description3=mstatus2, temp3=mtemp, url3=murl, stops=stop_data_list)
+    # return render_template('trip.html', city1=origin, key1=ostatus1, description1=ostatus2, temp1=otemp, url1=ourl,
+    #                        city2=dest, key2=dstatus1, description2=dstatus2, temp2=dtemp, url2=durl,
+    #                        stops=stop_data)
 
 
 ### This is just for testing - delete later ###
