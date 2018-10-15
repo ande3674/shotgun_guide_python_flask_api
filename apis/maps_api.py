@@ -15,8 +15,8 @@ STATIC_MAP_URL_MARKERS = 'https://maps.googleapis.com/maps/api/staticmap?center=
 
 def reverse_geocode_place(lat, lon):
     l = str(lat) + "," + str(lon)
-    U = 'https://maps.googleapis.com/maps/api/geocode/json?latlng={LL}&key=AIzaSyCUzzNpRfSkRPbdOHtrjnlfCaCZ26cNKnc'.format(LL=l)
-    response = requests.get(U).json()
+    u = 'https://maps.googleapis.com/maps/api/geocode/json?latlng={LL}&key=AIzaSyCUzzNpRfSkRPbdOHtrjnlfCaCZ26cNKnc'.format(LL=l)
+    response = requests.get(u).json()
     return response
 def get_static_map_of_place(place): # TODO - add markers to map
     place = split_up(place)
