@@ -1,5 +1,5 @@
 from flask import Flask, request, render_template
-from apis import weather_api, maps_api, bing_api
+from apis import weather_api, maps_api, bing_api, places_api
 from googlemaps.client import geocode, reverse_geocode
 #from flask_bootstrap import Bootstrap
 
@@ -45,12 +45,14 @@ def get_trip():
         place_name=bing_api.reverse_geocode_place(lat, lon)
         status1, status2, temp = weather_api.get_statuses_and_temp_at_coords(lat, lon)
         url = maps_api.get_static_map_of_coords(lat, lon)
+        something_to_do = places_api.get_place_name(lat, lon)
         stop_data = {}
         stop_data['name']=place_name
         stop_data['key'] = status1
         stop_data['description'] = status2
         stop_data['temp'] = temp
         stop_data['url'] = url
+        stop_data['todo'] = something_to_do
         stop_data_list.append(stop_data)
 
     main_map_url = maps_api.build_main_map_url(stops)
