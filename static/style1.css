@@ -16,3 +16,7 @@ body {
     background: cornsilk;
     color: darkslategrey;
 }
+li {
+    font-size: 40px;
+    font-style: italic;
+}

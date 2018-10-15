@@ -20,16 +20,6 @@
 <h3>Current temperature: {{ temp2 }} F</h3>
 <br>
 
-<h1>You will stop halfway in: {{ city3 }}</h1>
-<br>
-    <img src="{{ url3 }}">
-<h2>Weather</h2>
-<h3>{{ key3 }} : {{ description3 }}</h3>
-<h3>Current temperature: {{ temp3 }} F</h3>
-<br>
-<h1>Enjoy your trip!</h1>
-
-
 <h1>Here are your stops for this trip</h1>
 <ol>
 {%  for stop in stops %}
@@ -41,5 +31,5 @@
 {% endfor %}
 </ol>
 
-
+<h1>Enjoy your trip!</h1>
 {%  endblock %}
