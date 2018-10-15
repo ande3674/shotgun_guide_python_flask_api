@@ -53,12 +53,11 @@ def get_trip():
         stop_data['url'] = url
         stop_data_list.append(stop_data)
 
-    return render_template('trip.html', city1=origin, key1=ostatus1, description1=ostatus2, temp1=otemp, url1=ourl,
+    main_map_url = maps_api.build_main_map_url(stops)
+
+    return render_template('trip.html', mainmap=main_map_url, city1=origin, key1=ostatus1, description1=ostatus2, temp1=otemp, url1=ourl,
                            city2=dest, key2=dstatus1, description2=dstatus2, temp2=dtemp, url2=durl,
                            city3=mplace, key3=mstatus1, description3=mstatus2, temp3=mtemp, url3=murl, stops=stop_data_list)
-    # return render_template('trip.html', city1=origin, key1=ostatus1, description1=ostatus2, temp1=otemp, url1=ourl,
-    #                        city2=dest, key2=dstatus1, description2=dstatus2, temp2=dtemp, url2=durl,
-    #                        stops=stop_data)
 
 
 ### This is just for testing - delete later ###

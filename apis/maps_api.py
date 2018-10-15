@@ -69,7 +69,27 @@ def get_stops(place1, place2):
             loc = (steps[i]['end_location']['lat'], steps[i]['end_location']['lng'])
             stops.append(loc)
     return stops
-
+def build_main_map_url(stops):
+    url = 'https://maps.googleapis.com/maps/api/staticmap?&size=600x400&path=color:0x0000ff%7Cweight:5%7C'
+    count1 = 0
+    for stop in stops:
+        count1 += 1
+        if count1 != len(stops):
+            url += format_lat_lon(stop[0], stop[1]) +'%7C'
+        else:
+            url += format_lat_lon(stop[0], stop[1])
+    url += '&markers=color:blue%7Clabel:S%7C'
+    count2 = 0
+    for stop in stops:
+        count2 += 1
+        if count2 != len(stops):
+            url += format_lat_lon(stop[0], stop[1]) +'%7C'
+        else:
+            url += format_lat_lon(stop[0], stop[1])
+    url += '&key=AIzaSyCUzzNpRfSkRPbdOHtrjnlfCaCZ26cNKnc'
+    return url
+def format_lat_lon(lat, lon):
+    return str(lat) + "," + str(lon)
 def split_up(s):
     split = s.split(" ")
     return_string = ''
@@ -112,6 +132,8 @@ def split_up(s):
 # #print(p)
 #p = reverse_geocode_place(44.9778, 93.2650)
 #print(p)
-# s = get_stops('boston', 'miami')
+#s = get_stops('boston', 'miami')
+#l = build_main_map_url(s)
+#print(l)
 # for i in range(len(s)):
 #     print(s[i])
