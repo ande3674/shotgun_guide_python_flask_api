@@ -1,33 +1,39 @@
 import requests, googlemaps
 
-# Google Maps API
+# Google Maps API Static URLs
 GOOGLE_KEY = 'AIzaSyCUzzNpRfSkRPbdOHtrjnlfCaCZ26cNKnc'
 GOOGLE_KEY2 = "AIzaSyBRkvf3BQmjTKQ2Lbxt97ZmFgCIAILuIP0"
 DIRECTIONS_URL_TEMPLATE = 'https://maps.googleapis.com/maps/api/directions/json?origin={ORIGIN}' \
                          '&destination={DESTINATION}&key=AIzaSyCUzzNpRfSkRPbdOHtrjnlfCaCZ26cNKnc'
-STATIC_MAP_URL = 'https://maps.googleapis.com/maps/api/staticmap?center={CENTER}' \
+STATIC_MAP_URL_WITHOUT_MARKERS = 'https://maps.googleapis.com/maps/api/staticmap?center={CENTER}' \
                  '&zoom={ZOOM}&size=600x400&maptype={TYPE}' \
-                 '&key=AIzaSyCUzzNpRfSkRPbdOHtrjnlfCaCZ26cNKnc' #types:roadmap, satellite, hybrid, terrain,
-STATIC_MAP_URL_MARKERS = 'https://maps.googleapis.com/maps/api/staticmap?center={CENTER}' \
+                 '&key=AIzaSyCUzzNpRfSkRPbdOHtrjnlfCaCZ26cNKnc'#types:roadmap, satellite, hybrid, terrain,
+STATIC_MAP_URL_MARKERS1 = 'https://maps.googleapis.com/maps/api/staticmap?markers=size:mid%7Ccolor:0xFFFF00%7Clabel:X%7C{CENTER}' \
+                 '&zoom={ZOOM}&size=600x400&maptype={TYPE}' \
+                 '&key=AIzaSyCUzzNpRfSkRPbdOHtrjnlfCaCZ26cNKnc'
+STATIC_MAP_URL_MARKERS2 = 'https://maps.googleapis.com/maps/api/staticmap?center={CENTER}' \
                  '&zoom={ZOOM}&size=600x400&maptype={TYPE}&markers=color:red%7Clabel:C%7C{LATLON}' \
                  '&key=AIzaSyCUzzNpRfSkRPbdOHtrjnlfCaCZ26cNKnc'
-#SEARCH_MAP_URL = 'https://www.google.com/maps/search/?api=1&query={QUERY}&zoom={ZOOM}&key=AIzaSyCUzzNpRfSkRPbdOHtrjnlfCaCZ26cNKnc'
+
 
 def reverse_geocode_place(lat, lon):
     l = str(lat) + "," + str(lon)
     u = 'https://maps.googleapis.com/maps/api/geocode/json?latlng={LL}&key=AIzaSyCUzzNpRfSkRPbdOHtrjnlfCaCZ26cNKnc'.format(LL=l)
     response = requests.get(u).json()
     return response
-def get_static_map_of_place(place): # TODO - add markers to map
+
+
+def get_static_map_of_place(place):
     place = split_up(place)
-    url = STATIC_MAP_URL.format(CENTER=place, ZOOM=7, TYPE='roadmap')
+    url = STATIC_MAP_URL_MARKERS1.format(CENTER=place, ZOOM=7, TYPE='roadmap')
     return url
-# def get_map_of_place(place):
-#     place = split_up(place)
-#     url = SEARCH_MAP_URL.format(QUERY=place, ZOOM=7)
+
+
 def get_static_map_of_coords(lat, lon):
-    url = STATIC_MAP_URL_MARKERS.format(CENTER=str(lat)+','+str(lon), ZOOM=10, TYPE='roadmap', LATLON=str(lat)+','+str(lon))
+    url = STATIC_MAP_URL_MARKERS2.format(CENTER=str(lat) + ',' + str(lon), ZOOM=10, TYPE='roadmap', LATLON=str(lat) + ',' + str(lon))
     return url
+
+
 def get_directions(place1, place2):
     url = DIRECTIONS_URL_TEMPLATE.format(ORIGIN=place1, DESTINATION=place2)
     response = requests.get(url).json()
@@ -35,6 +41,8 @@ def get_directions(place1, place2):
     legs = routes['legs'][0]
     steps = legs['steps']
     return steps
+
+
 def get_origin_dest_coords(place1, place2):
     url = DIRECTIONS_URL_TEMPLATE.format(ORIGIN=place1, DESTINATION=place2)
     response = requests.get(url).json()
@@ -47,18 +55,24 @@ def get_origin_dest_coords(place1, place2):
     place2_lat = end_location['lat']
     place2_lon = end_location['lng']
     return ((place1_lat, place1_lon), (place2_lat, place2_lon))
+
+
 def get_directions1(url):
     response = requests.get(url).json()
     routes = response['routes'][0]
     legs = routes['legs'][0]
     steps = legs['steps']
     return steps
+
+
 def get_midway_location(steps):
     num_steps = len(steps)
     location_data = steps[round(num_steps/2)]#halfway point
     lat = location_data['end_location']['lat']
     long = location_data['end_location']['lng']
     return lat, long
+
+
 def get_stops(place1, place2):
     url = DIRECTIONS_URL_TEMPLATE.format(ORIGIN=place1, DESTINATION=place2)
     response = requests.get(url).json()
@@ -81,7 +95,9 @@ def get_stops(place1, place2):
             loc = (steps[i]['end_location']['lat'], steps[i]['end_location']['lng'])
             stops.append(loc)
     return stops
-def build_main_map_url(stops): #TODO
+
+
+def build_main_map_url(stops):
     url = 'https://maps.googleapis.com/maps/api/staticmap?&size=600x400&path=color:0x0000ff%7Cweight:5%7C'
     count1 = 0
     for stop in stops:
@@ -100,8 +116,12 @@ def build_main_map_url(stops): #TODO
             url += format_lat_lon(stop[0], stop[1])
     url += '&key=AIzaSyCUzzNpRfSkRPbdOHtrjnlfCaCZ26cNKnc'
     return url
+
+
 def format_lat_lon(lat, lon):
     return str(lat) + "," + str(lon)
+
+
 def split_up(s):
     split = s.split(" ")
     return_string = ''
@@ -111,6 +131,7 @@ def split_up(s):
         else:
             return_string += (split[i] + '+')
     return return_string
+
 
 ##############
 # TEST STUFF #
