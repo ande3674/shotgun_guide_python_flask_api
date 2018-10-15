@@ -1,5 +1,5 @@
 from flask import Flask, request, render_template
-from apis import weather_api, maps_api
+from apis import weather_api, maps_api, bing_api
 from googlemaps.client import geocode, reverse_geocode
 #from flask_bootstrap import Bootstrap
 
@@ -30,16 +30,16 @@ def get_trip():
 
     # get info about a point along the way
     midway_step = maps_api.get_directions(origin, dest)
-    midway_lon, midway_lat = maps_api.get_midway_location(midway_step)
+    midway_lat, midway_lon = maps_api.get_midway_location(midway_step)
     # get the closest city to this place! TODO
-    mplace = maps_api.reverse_geocode_place(midway_lon, midway_lat)
-    mplace_name = mplace[0]['formatted_address']#['formatted_address']
+    mplace = bing_api.reverse_geocode_place(midway_lon, midway_lat)
+
     mstatus1, mstatus2, mtemp = weather_api.get_statuses_and_temp_at_coords(midway_lon, midway_lat)
     murl = maps_api.get_static_map_of_coords(midway_lon, midway_lat)
 
     return render_template('trip.html', city1=origin, key1=ostatus1, description1=ostatus2, temp1=otemp, url1=ourl,
                            city2=dest, key2=dstatus1, description2=dstatus2, temp2=dtemp, url2=durl,
-                           city3=mplace_name, key3=mstatus1, description3=mstatus2, temp3=mtemp, url3=murl)
+                           city3=mplace, key3=mstatus1, description3=mstatus2, temp3=mtemp, url3=murl)
 
 
 ### This is just for testing - delete later ###

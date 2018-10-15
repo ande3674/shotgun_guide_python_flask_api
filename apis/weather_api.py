@@ -33,7 +33,7 @@ def get_statuses_and_temp_at_place(place):
     return status, det_status, temp
 
 def get_statuses_and_temp_at_coords(lon, lat):
-    obs = owm.weather_around_coords(lon, lat)
+    obs = owm.weather_around_coords(lat, lon)
     w = obs[0].get_weather()
     status = w.get_status()
     det_status = w.get_detailed_status()
