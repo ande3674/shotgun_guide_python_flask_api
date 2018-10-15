@@ -1,25 +1,25 @@
 {% extends "base.html" %}
 
 {% block content %}
-<h1>LET'S PLAN YOUR ROAD TRIP!</h1>
+<h1>HERE'S YOUR ROAD TRIP PLAN!</h1>
 <img src="{{ mainmap }}">
-
-<h1>Starting in: {{ city1 }}</h1>
 <br>
+<h1>Starting in: {{ city1 }}</h1>
     <img src="{{ url1 }}">
 <br>
-<h2>Weather</h2>
+<h2>Weather in {{ city1 }}</h2>
 <h3>{{ key1 }}: {{ description1 }}</h3>
 <h3>Current temperature: {{ temp1 }} F</h3>
+<h3>Something to do: {{ todo1 }} </h3>
 <br>
 
 
 <h1>... and driving to: {{ city2 }}</h1>
-<br>
     <img src="{{ url2 }}">
-<h2>Weather</h2>
+<h2>Weather in {{ city2 }}</h2>
 <h3>{{ key2 }}: {{ description2 }}</h3>
 <h3>Current temperature: {{ temp2 }} F</h3>
+<h3>Something to do: {{ todo2 }} </h3>
 <br>
 
 <h1>Here is where you will stop along the way:</h1>

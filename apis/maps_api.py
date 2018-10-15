@@ -35,6 +35,18 @@ def get_directions(place1, place2):
     legs = routes['legs'][0]
     steps = legs['steps']
     return steps
+def get_origin_dest_coords(place1, place2):
+    url = DIRECTIONS_URL_TEMPLATE.format(ORIGIN=place1, DESTINATION=place2)
+    response = requests.get(url).json()
+    routes = response['routes'][0]
+    legs = routes['legs'][0]
+    start_location = legs['start_location']
+    end_location = legs['end_location']
+    place1_lat = start_location['lat']
+    place1_lon = start_location['lng']
+    place2_lat = end_location['lat']
+    place2_lon = end_location['lng']
+    return ((place1_lat, place1_lon), (place2_lat, place2_lon))
 def get_directions1(url):
     response = requests.get(url).json()
     routes = response['routes'][0]
@@ -69,7 +81,7 @@ def get_stops(place1, place2):
             loc = (steps[i]['end_location']['lat'], steps[i]['end_location']['lng'])
             stops.append(loc)
     return stops
-def build_main_map_url(stops):
+def build_main_map_url(stops): #TODO
     url = 'https://maps.googleapis.com/maps/api/staticmap?&size=600x400&path=color:0x0000ff%7Cweight:5%7C'
     count1 = 0
     for stop in stops:
