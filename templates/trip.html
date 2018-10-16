@@ -10,28 +10,59 @@
     <hr/>
 
 <h2>Starting Point: {{ city1 }}</h2>
-    <img src="{{ image1 }}" width="600" height="400"><br>
-    <img src="{{ url1 }}">
+    <figure>
+        <img src="{{ image1 }}" width="600" height="400">
+        <p><figcaption>{{ city1 }}</figcaption></p>
+    </figure>
+    <figure>
+        <img src="{{ url1 }}">
+        <p><figcaption>Map of {{ city1 }}</figcaption></p>
+    </figure>
 <br>
-    <p>
-    <b>Weather in {{ city1 }}</b> <br>
-    -> {{ key1 }}: {{ description1 }} <br>
-    <b>Current temperature:</b> {{ temp1 }} F <br>
-    <b>Something to do:</b> <a href="{{ google1 }}" target="_blank">{{ todo1 }}</a>
-    </p>
+    <h3>Stop Details</h3>
+    <table>
+        <tr>
+            <th scope="row">CURRENT WEATHER</th>
+            <td>{{ key1 }}: {{ description1 }}</td>
+        </tr>
+        <tr>
+            <th scope="row">CURRENT TEMPERATURE</th>
+            <td>{{ temp1 }} F</td>
+        </tr>
+        <tr>
+            <th scope="row">SOMETHING TO DO</th>
+            <td><a href="{{ google1 }}" target="_blank">{{ todo1 }}</a></td>
+        </tr>
+    </table>
 <hr/>
 
 <h2>Final Destination: {{ city2 }}</h2>
-    <img src="{{ image2 }}" width="600" height="400"><br>
-    <img src="{{ url2 }}">
+    <figure>
+        <img src="{{ image2 }}" width="600" height="400">
+        <p><figcaption>{{ city2 }}</figcaption></p>
+    </figure>
+    <figure>
+        <img src="{{ url2 }}">
+        <p><figcaption>Map of {{ city2 }}</figcaption></p>
+    </figure>
 <br>
-    <p>
-    <b>Weather in {{ city2 }}</b> <br>
-    -> {{ key2 }}: {{ description2 }} <br>
-    <b>Current temperature:</b> {{ temp2 }} F <br>
-    <b>Something to do:</b> <a href="{{ google2 }}" target="_blank">{{ todo2 }}</a>
-    </p>
+    <h3>Stop Details</h3>
+    <table>
+        <tr>
+            <th scope="row">CURRENT WEATHER</th>
+            <td>{{ key2 }}: {{ description2 }}</td>
+        </tr>
+        <tr>
+            <th scope="row">CURRENT TEMPERATURE</th>
+            <td>{{ temp2 }} F</td>
+        </tr>
+        <tr>
+            <th scope="row">SOMETHING TO DO</th>
+            <td><a href="{{ google2 }}" target="_blank">{{ todo2 }}</a></td>
+        </tr>
+    </table>
 <hr/>
+
 <a href="/city?origin={{ city1 }}&dest={{ city2 }}">GET TRIP DETAILS NOW!</a>
 
 
@@ -44,13 +75,25 @@
     <ol>
     {%  for stop in stops %}
         <li>{{ stop.name }}</li>
-        <img src="{{ stop.url }}">
-        <p>
-            <b>Weather in {{ stop.name }}</b> <br>
-            -> {{ stop.key }}: {{ stop.description }} <br>
-            <b>Temperature:</b> {{ stop.temp }} F <br>
-            <b>Something to do here:</b> <a href="{{ stop.google }}" target="_blank">{{ stop.todo }}</a>
-        </p>
+        <figure>
+            <img src="{{ stop.url }}">
+            <p><figcaption>Map of {{ stop.name }}</figcaption></p>
+        </figure>
+        <h3>Stop Details</h3>
+        <table>
+            <tr>
+                <th scope="row">CURRENT WEATHER</th>
+                <td>{{ stop.key }}: {{ stop.description }}</td>
+            </tr>
+            <tr>
+                <th scope="row">CURRENT TEMPERATURE</th>
+                <td>{{ stop.temp }} F </td>
+            </tr>
+            <tr>
+                <th scope="row">SOMETHING TO DO</th>
+                <td><a href="{{ stop.google }}" target="_blank">{{ stop.todo }}</a></td>
+            </tr>
+        </table>
     <hr/>
     {% endfor %}
     </ol>
