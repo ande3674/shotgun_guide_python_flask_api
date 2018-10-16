@@ -2,20 +2,21 @@
 
 {% block content %}
 
-<h1>{{ city1 }}</h1>
-<br>
-<h2>Weather:</h2>
-<h3>{{ key1 }} : {{ description1 }}</h3>
-<h3>Current temperature: {{ temp1 }} F</h3>
-<br>
-
-
-<h1>{{ city2 }}</h1>
-<br>
-<h2>Weather:</h2>
-<h3>{{ key2 }} : {{ description2 }}</h3>
-<h3>Current temperature: {{ temp2 }} F</h3>
-<br>
-<h1>Enjoy your trip!</h1>
+<h1><b>Here is where you will stop along the way:</b></h1>
+    <img src="{{ mainmap }}">
+<ol>
+{%  for stop in stops %}
+        <li>{{ stop.name }}</li>
+        <img src="{{ stop.url }}">
+        <h2>Weather in {{ stop.name }}</h2>:
+            <ul>
+                <li>{{ stop.key }}: {{ stop.description }}</li>
+            </ul>
+        <h2>Temperature: {{ stop.temp }} F</h2>
+        <h2>Something to do here: <a href="{{ stop.google }}">{{ stop.todo }}</a></h2>
+        <hr/>
+{% endfor %}
+</ol>
+<strong><h1>Enjoy your trip!</h1></strong>
 
 {%  endblock %}

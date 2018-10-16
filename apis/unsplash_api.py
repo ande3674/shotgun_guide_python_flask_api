@@ -4,6 +4,7 @@ KEY = 'ef253021d306d26257725b9b255a9e89e7bc781641d78af61609f3097c08526f'
 SECRET_KEY = 'bc52f824e8ee27a56adfb9b3df8424620f24ace85cd9e4cd57fa9cfbfaf939c6'
 URL = 'https://api.unsplash.com/search/photos?page=1&query={TAG}' \
       '&client_id=ef253021d306d26257725b9b255a9e89e7bc781641d78af61609f3097c08526f'
+# https://api.unsplash.com/search/photos?page=1&query=paris&client_id=ef253021d306d26257725b9b255a9e89e7bc781641d78af61609f3097c08526f
 
 def search_by_tag_return_link(tag):
     tag = split_up(tag)
@@ -11,7 +12,7 @@ def search_by_tag_return_link(tag):
     response = requests.get(url).json()
     photos_array = response['results']
     photo_object = photos_array[0]
-    url = photo_object['urls']['small']
+    url = photo_object['urls']['regular']
     return url
 
 

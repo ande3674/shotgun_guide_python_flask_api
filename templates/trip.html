@@ -1,40 +1,62 @@
 {% extends "base.html" %}
 
 {% block content %}
-<h1>HERE'S YOUR ROAD TRIP PLAN!</h1>
-<img src="{{ mainmap }}">
-<br>
-<h1>Starting in: {{ city1 }}</h1>
-    <img src="{{ image1 }}"><br>
+
+<h1 id="top">HERE'S YOUR ROAD TRIP PLAN!</h1>
+<figure>
+    <img src="{{ mainmap }}">
+    <p><figcaption>Trip Overview</figcaption></p>
+</figure>
+    <hr/>
+
+<h2>Starting Point: {{ city1 }}</h2>
+    <img src="{{ image1 }}" width="600" height="400"><br>
     <img src="{{ url1 }}">
 <br>
-<h2>Weather in {{ city1 }}</h2>
-<h3>{{ key1 }}: {{ description1 }}</h3>
-<h3>Current temperature: {{ temp1 }} F</h3>
-<h3>Something to do: <a href="{{ google1 }}">{{ todo1 }}</a></h3>
-<br>
+    <p>
+    <b>Weather in {{ city1 }}</b> <br>
+    -> {{ key1 }}: {{ description1 }} <br>
+    <b>Current temperature:</b> {{ temp1 }} F <br>
+    <b>Something to do:</b> <a href="{{ google1 }}" target="_blank">{{ todo1 }}</a>
+    </p>
+<hr/>
 
-
-<h1>... and driving to: {{ city2 }}</h1>
-    <img src="{{ image2 }}"><br>
+<h2>Final Destination: {{ city2 }}</h2>
+    <img src="{{ image2 }}" width="600" height="400"><br>
     <img src="{{ url2 }}">
-<h2>Weather in {{ city2 }}</h2>
-<h3>{{ key2 }}: {{ description2 }}</h3>
-<h3>Current temperature: {{ temp2 }} F</h3>
-<h3>Something to do: <a href="{{ google2 }}">{{ todo2 }}</a></h3>
 <br>
+    <p>
+    <b>Weather in {{ city2 }}</b> <br>
+    -> {{ key2 }}: {{ description2 }} <br>
+    <b>Current temperature:</b> {{ temp2 }} F <br>
+    <b>Something to do:</b> <a href="{{ google2 }}" target="_blank">{{ todo2 }}</a>
+    </p>
+<hr/>
+<a href="/city?origin={{ city1 }}&dest={{ city2 }}">GET TRIP DETAILS NOW!</a>
 
-<h1>Here is where you will stop along the way:</h1>
-<ol>
-{%  for stop in stops %}
+
+<h2>Here is where you will stop along the way:</h2>
+    <figure>
+    <img src="{{ mainmap }}">
+    <p><figcaption>Trip Overview</figcaption></p>
+    </figure>
+
+    <ol>
+    {%  for stop in stops %}
         <li>{{ stop.name }}</li>
         <img src="{{ stop.url }}">
-        <h3> Weather in {{ stop.name }}:</h3>
-        <h3>{{ stop.key }}: {{ stop.description }}</h3>
-        <h3>Temperature: {{ stop.temp }} F</h3>
-        <h3>Something to do here: <a href="{{ stop.google }}">{{ stop.todo }}</a></h3>
-{% endfor %}
-</ol>
+        <p>
+            <b>Weather in {{ stop.name }}</b> <br>
+            -> {{ stop.key }}: {{ stop.description }} <br>
+            <b>Temperature:</b> {{ stop.temp }} F <br>
+            <b>Something to do here:</b> <a href="{{ stop.google }}" target="_blank">{{ stop.todo }}</a>
+        </p>
+    <hr/>
+    {% endfor %}
+    </ol>
 
-<h1>Enjoy your trip!</h1>
+<strong><h1>Enjoy your trip!</h1></strong>
+
+    <a href="#top">Top</a>
+
 {%  endblock %}
