@@ -1,5 +1,5 @@
 from flask import Flask, request, render_template
-from apis import weather_api, maps_api, bing_api, places_api
+from apis import weather_api, maps_api, bing_api, places_api, unsplash_api
 from googlemaps.client import geocode, reverse_geocode
 #from flask_bootstrap import Bootstrap
 
@@ -34,6 +34,9 @@ def get_trip():
         # get something to do for these places
         otodo = places_api.get_place_name(origin_coords[0], origin_coords[1], 3)
         dtodo = places_api.get_place_name(dest_coords[0], dest_coords[1], 4)
+        # get an image of the place
+        oimage = unsplash_api.search_by_tag_return_link(origin)
+        dimage = unsplash_api.search_by_tag_return_link(dest)
 
          # get info about a point along the way
         midway_step = maps_api.get_directions(origin, dest)
@@ -68,8 +71,9 @@ def get_trip():
         all_stops.append(dest_coords)
         main_map_url = maps_api.build_main_map_url(all_stops)
 
-        return render_template('trip.html', mainmap=main_map_url, city1=origin, key1=ostatus1, description1=ostatus2, temp1=otemp, url1=ourl, todo1=otodo,
-                               city2=dest, key2=dstatus1, description2=dstatus2, temp2=dtemp, url2=durl, todo2=dtodo,
+        return render_template('trip.html', mainmap=main_map_url,
+                               city1=origin, key1=ostatus1, description1=ostatus2, temp1=otemp, url1=ourl, todo1=otodo, image1=oimage,
+                               city2=dest, key2=dstatus1, description2=dstatus2, temp2=dtemp, url2=durl, todo2=dtodo, image2=dimage,
                                city3=mplace, key3=mstatus1, description3=mstatus2, temp3=mtemp, url3=murl, stops=stop_data_list)
 
     except IndexError:
