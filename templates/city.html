@@ -2,21 +2,40 @@
 
 {% block content %}
 
-<h1><b>Here is where you will stop along the way:</b></h1>
+<h2 id="top">Here is where you will stop along the way:</h2>
+    <figure>
     <img src="{{ mainmap }}">
-<ol>
-{%  for stop in stops %}
+    <p><figcaption>Trip Overview</figcaption></p>
+    </figure>
+
+    <ol>
+    {%  for stop in stops %}
         <li>{{ stop.name }}</li>
-        <img src="{{ stop.url }}">
-        <h2>Weather in {{ stop.name }}</h2>:
-            <ul>
-                <li>{{ stop.key }}: {{ stop.description }}</li>
-            </ul>
-        <h2>Temperature: {{ stop.temp }} F</h2>
-        <h2>Something to do here: <a href="{{ stop.google }}">{{ stop.todo }}</a></h2>
-        <hr/>
-{% endfor %}
-</ol>
+        <figure>
+            <img src="{{ stop.url }}">
+            <p><figcaption>Map of {{ stop.name }}</figcaption></p>
+        </figure>
+        <h3>Stop Details</h3>
+        <table>
+            <tr>
+                <th scope="row">CURRENT WEATHER</th>
+                <td>{{ stop.key }}: {{ stop.description }}</td>
+            </tr>
+            <tr>
+                <th scope="row">CURRENT TEMPERATURE</th>
+                <td>{{ stop.temp }} F </td>
+            </tr>
+            <tr>
+                <th scope="row">SOMETHING TO DO</th>
+                <td><a href="{{ stop.google }}" target="_blank">{{ stop.todo }}</a></td>
+            </tr>
+        </table>
+    <hr/>
+    {% endfor %}
+    </ol>
+
 <strong><h1>Enjoy your trip!</h1></strong>
+
+    <a href="#top">Top</a>
 
 {%  endblock %}

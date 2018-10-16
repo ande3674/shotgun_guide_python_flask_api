@@ -2,11 +2,11 @@
 
 {% block content %}
 
-<h1 id="top">HERE'S YOUR ROAD TRIP PLAN!</h1>
-<figure>
+<h1 id="top">TRIP INFORMATION</h1>
+<!--figure>
     <img src="{{ mainmap }}">
     <p><figcaption>Trip Overview</figcaption></p>
-</figure>
+</figure-->
     <hr/>
 
 <h2>Starting Point: {{ city1 }}</h2>
@@ -63,9 +63,14 @@
     </table>
 <hr/>
 
-<a href="/city?origin={{ city1 }}&dest={{ city2 }}">GET TRIP DETAILS NOW!</a>
 
+    <form action="/city">
+        <input type="submit" value="Get Stop Details!" />
+        <input type="hidden" name="origin" value="{{ city1 }}"/>
+        <input type="hidden" name="destination" value="{{ city2 }}"/>
+    </form>
 
+<!--
 <h2>Here is where you will stop along the way:</h2>
     <figure>
     <img src="{{ mainmap }}">
@@ -99,7 +104,8 @@
     </ol>
 
 <strong><h1>Enjoy your trip!</h1></strong>
+-->
 
-    <a href="#top">Top</a>
+<a href="#top">Top</a>
 
 {%  endblock %}

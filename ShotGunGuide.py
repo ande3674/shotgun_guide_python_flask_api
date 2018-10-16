@@ -43,30 +43,30 @@ def get_trip():
         dgoogle_link = GOOGLE_URL + split_up(dest + " " + dtodo)
 
         # get information for the stops on this trip
-        stops_in_between = maps_api.get_stops(origin, dest)
-        stop_data_list = []
-        for s in stops_in_between:
-            lat = s[0]
-            lon = s[1]
-            place_name=bing_api.reverse_geocode_place(lat, lon)
-            status1, status2, temp = weather_api.get_statuses_and_temp_at_coords(lat, lon)
-            url = maps_api.get_static_map_of_coords(lat, lon)
-            something_to_do = places_api.get_place_name(lat, lon)
-            google_link = GOOGLE_URL + split_up(place_name + " " + something_to_do)
-            stop_data = {'name':place_name, 'key':status1, 'description':status2, 'temp':temp, 'url':url, 'todo':something_to_do, 'google':google_link}
-            stop_data_list.append(stop_data)
+        # stops_in_between = maps_api.get_stops(origin, dest)
+        # stop_data_list = []
+        # for s in stops_in_between:
+        #     lat = s[0]
+        #     lon = s[1]
+        #     place_name=bing_api.reverse_geocode_place(lat, lon)
+        #     status1, status2, temp = weather_api.get_statuses_and_temp_at_coords(lat, lon)
+        #     url = maps_api.get_static_map_of_coords(lat, lon)
+        #     something_to_do = places_api.get_place_name(lat, lon)
+        #     google_link = GOOGLE_URL + split_up(place_name + " " + something_to_do)
+        #     stop_data = {'name':place_name, 'key':status1, 'description':status2, 'temp':temp, 'url':url, 'todo':something_to_do, 'google':google_link}
+        #     stop_data_list.append(stop_data)
+        #
+        # # build url for the main map of the entire trip, with markers
+        # all_stops = [origin_coords]
+        # for stop in stops_in_between:
+        #     all_stops.append(stop)
+        # all_stops.append(dest_coords)
+        # main_map_url = maps_api.build_main_map_url(all_stops)
 
-        # build url for the main map of the entire trip, with markers
-        all_stops = [origin_coords]
-        for stop in stops_in_between:
-            all_stops.append(stop)
-        all_stops.append(dest_coords)
-        main_map_url = maps_api.build_main_map_url(all_stops)
-
-        return render_template('trip.html', mainmap=main_map_url,
+        return render_template('trip.html', #mainmap=main_map_url,
                                city1=origin, key1=ostatus1, description1=ostatus2, temp1=otemp, url1=ourl, todo1=otodo, image1=oimage, google1=ogoogle_link,
-                               city2=dest, key2=dstatus1, description2=dstatus2, temp2=dtemp, url2=durl, todo2=dtodo, image2=dimage, google2=dgoogle_link,
-                               stops=stop_data_list)
+                               city2=dest, key2=dstatus1, description2=dstatus2, temp2=dtemp, url2=durl, todo2=dtodo, image2=dimage, google2=dgoogle_link)
+                               #stops=stop_data_list)
 
     except IndexError:
         return render_template('error.html')
