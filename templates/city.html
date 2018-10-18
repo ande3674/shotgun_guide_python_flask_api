@@ -2,40 +2,44 @@
 
 {% block content %}
 
-<h2 id="top">Here is where you will stop along the way:</h2>
-    <figure>
-    <img src="{{ mainmap }}">
-    <p><figcaption>Trip Overview</figcaption></p>
-    </figure>
+    <div class="head"></div>
+        <h2 id="top">Here is where you will stop along the way:</h2>
+        <figure>
+            <img src="{{ mainmap }}">
+            <p><figcaption>Trip Overview</figcaption></p>
+        </figure>
+    </div>
 
     <ol>
     {%  for stop in stops %}
-        <li>{{ stop.name }}</li>
-        <figure>
-            <img src="{{ stop.url }}">
-            <p><figcaption>Map of {{ stop.name }}</figcaption></p>
-        </figure>
-        <h3>Stop Details</h3>
-        <table>
-            <tr>
-                <th scope="row">CURRENT WEATHER</th>
-                <td>{{ stop.key }}: {{ stop.description }}</td>
-            </tr>
-            <tr>
-                <th scope="row">CURRENT TEMPERATURE</th>
-                <td>{{ stop.temp }} F </td>
-            </tr>
-            <tr>
-                <th scope="row">SOMETHING TO DO</th>
-                <td><a href="{{ stop.google }}" target="_blank">{{ stop.todo }}</a></td>
-            </tr>
-        </table>
-    <hr/>
+        <div class="stop">
+            <h2><li>{{ stop.name }}</li></h2>
+            <figure>
+                <img src="{{ stop.url }}">
+                <p><figcaption>Map of {{ stop.name }}</figcaption></p>
+            </figure>
+            <h3>Stop Details</h3>
+            <table>
+                <tr>
+                    <th scope="row">CURRENT WEATHER</th>
+                    <td>{{ stop.key }}: {{ stop.description }}</td>
+                </tr>
+                <tr>
+                    <th scope="row">CURRENT TEMPERATURE</th>
+                    <td>{{ stop.temp }} F </td>
+                </tr>
+                <tr>
+                    <th scope="row">SOMETHING TO DO</th>
+                    <td><a href="{{ stop.google }}" target="_blank">{{ stop.todo }}</a></td>
+                </tr>
+            </table>
+        <hr/>
+        </div>
     {% endfor %}
     </ol>
-
-<strong><h1>Enjoy your trip!</h1></strong>
-
+<div class="foot">
+    <strong><h1>Enjoy your trip!</h1></strong>
+</div>
     <a href="#top">Top</a>
 
 {%  endblock %}

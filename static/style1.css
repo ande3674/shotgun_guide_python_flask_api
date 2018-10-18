@@ -1,5 +1,5 @@
 .topnav {
-    background-color: lavender;
+    background-color: aliceblue;
     overflow: hidden;
 }
 
@@ -13,10 +13,39 @@
 }
 
 body {
-    background: cornsilk;
+    background: lightblue;
     color: darkslategrey;
 }
-li {
+.form {
+    border: 1px solid darkslategray;
+    background-color: aliceblue;
+    padding: inherit;
+}
+.origin {
+    border: 1px solid darkslategray;
+    background-color: aliceblue;
+    padding: inherit;
+}
+.destination {
+    border: 1px solid darkslategray;
+    background-color: aliceblue;
+    padding: inherit;
+}
+.head {
+    border: 1px solid darkslategray;
+    background-color: aliceblue;
+    padding: inherit;
+}
+.stop{
+    border: 1px solid darkslategray;
+    background-color: aliceblue;
+    padding: inherit;
+}
+.stop li {
     font-size: 40px;
-    font-style: italic;
+}
+.foot {
+    border: 1px solid darkslategray;
+    background-color: aliceblue;
+    padding: inherit;
 }

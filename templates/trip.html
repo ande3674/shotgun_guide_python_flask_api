@@ -8,35 +8,36 @@
     <p><figcaption>Trip Overview</figcaption></p>
 </figure-->
     <hr/>
-
-<h2>Starting Point: {{ city1 }}</h2>
-    <figure>
-        <img src="{{ image1 }}" width="600" height="400">
-        <p><figcaption>{{ city1 }}</figcaption></p>
-    </figure>
-    <figure>
-        <img src="{{ url1 }}">
-        <p><figcaption>Map of {{ city1 }}</figcaption></p>
-    </figure>
-<br>
-    <h3>Stop Details</h3>
-    <table>
-        <tr>
-            <th scope="row">CURRENT WEATHER</th>
-            <td>{{ key1 }}: {{ description1 }}</td>
-        </tr>
-        <tr>
-            <th scope="row">CURRENT TEMPERATURE</th>
-            <td>{{ temp1 }} F</td>
-        </tr>
-        <tr>
-            <th scope="row">SOMETHING TO DO</th>
-            <td><a href="{{ google1 }}" target="_blank">{{ todo1 }}</a></td>
-        </tr>
-    </table>
-<hr/>
-
-<h2>Final Destination: {{ city2 }}</h2>
+<div class="origin">
+    <h2>Starting Point: {{ city1 }}</h2>
+        <figure>
+            <img src="{{ image1 }}" width="600" height="400">
+            <p><figcaption>{{ city1 }}</figcaption></p>
+        </figure>
+        <figure>
+            <img src="{{ url1 }}">
+            <p><figcaption>Map of {{ city1 }}</figcaption></p>
+        </figure>
+    <br>
+        <h3>Stop Details</h3>
+        <table>
+            <tr>
+                <th scope="row">CURRENT WEATHER</th>
+                <td>{{ key1 }}: {{ description1 }}</td>
+            </tr>
+            <tr>
+                <th scope="row">CURRENT TEMPERATURE</th>
+                <td>{{ temp1 }} F</td>
+            </tr>
+            <tr>
+                <th scope="row">SOMETHING TO DO</th>
+                <td><a href="{{ google1 }}" target="_blank">{{ todo1 }}</a></td>
+            </tr>
+        </table>
+    <hr/>
+</div>
+<div class="destination">
+    <h2>Final Destination: {{ city2 }}</h2>
     <figure>
         <img src="{{ image2 }}" width="600" height="400">
         <p><figcaption>{{ city2 }}</figcaption></p>
@@ -45,7 +46,7 @@
         <img src="{{ url2 }}">
         <p><figcaption>Map of {{ city2 }}</figcaption></p>
     </figure>
-<br>
+    <br>
     <h3>Stop Details</h3>
     <table>
         <tr>
@@ -61,8 +62,8 @@
             <td><a href="{{ google2 }}" target="_blank">{{ todo2 }}</a></td>
         </tr>
     </table>
-<hr/>
-
+    <hr/>
+</div>
 
     <form action="/city">
         <input type="submit" value="Get Stop Details!" />
