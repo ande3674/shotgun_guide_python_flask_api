@@ -22,10 +22,9 @@ def get_trip():
         dest = request.args.get('destination')
         # origin_ditc = {'name':origin, 'lon':origin_lon, 'lat':origin_lat}
         #dest_ditc = {'name': dest, 'lon': dest_lon, 'lat': dest_lat}
-        all_coords = maps_api.get_origin_dest_coords(origin, dest)
+        all_coords, distance, time = maps_api.get_origin_dest_coords(origin, dest)
         origin_coords = all_coords[0]
         dest_coords = all_coords[1]
-
         # get weather info for these places
         ostatus1, ostatus2, otemp = weather_api.get_statuses_and_temp_at_place(origin)
         dstatus1, dstatus2, dtemp = weather_api.get_statuses_and_temp_at_place(dest)
@@ -63,7 +62,7 @@ def get_trip():
         # all_stops.append(dest_coords)
         # main_map_url = maps_api.build_main_map_url(all_stops)
 
-        return render_template('trip.html', #mainmap=main_map_url,
+        return render_template('trip.html', distance=distance, time=time,
                                city1=origin, key1=ostatus1, description1=ostatus2, temp1=otemp, url1=ourl, todo1=otodo, image1=oimage, google1=ogoogle_link,
                                city2=dest, key2=dstatus1, description2=dstatus2, temp2=dtemp, url2=durl, todo2=dtodo, image2=dimage, google2=dgoogle_link)
                                #stops=stop_data_list)
@@ -76,11 +75,11 @@ def get_city():
     GOOGLE_URL = 'https://www.google.com/search?q='
     origin = request.args.get('origin')
     dest = request.args.get('destination')
-    all_coords = maps_api.get_origin_dest_coords(origin, dest)
+    all_coords, distance, time = maps_api.get_origin_dest_coords(origin, dest)
     origin_coords = all_coords[0]
     dest_coords = all_coords[1]
     # get information for the stops on this trip
-    stops_in_between = maps_api.get_stops(origin, dest)
+    stops_in_between = maps_api.get_stops_dist(origin, dest)
     stop_data_list = []
     for s in stops_in_between:
         lat = s[0]

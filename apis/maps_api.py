@@ -48,13 +48,15 @@ def get_origin_dest_coords(place1, place2):
     response = requests.get(url).json()
     routes = response['routes'][0]
     legs = routes['legs'][0]
+    total_distance = legs['distance']['text']
+    total_time = legs['duration']['text']
     start_location = legs['start_location']
     end_location = legs['end_location']
     place1_lat = start_location['lat']
     place1_lon = start_location['lng']
     place2_lat = end_location['lat']
     place2_lon = end_location['lng']
-    return ((place1_lat, place1_lon), (place2_lat, place2_lon))
+    return ((place1_lat, place1_lon), (place2_lat, place2_lon)), total_distance, total_time
 
 
 def get_directions1(url):
@@ -90,6 +92,31 @@ def get_stops(place1, place2):
             break
         # if we have surpassed another multiple of 7200, it is time to add another stop
         if int(timer/7200) > num_stops:
+            num_stops += 1
+            # add a stop by getting the lat and lon at this current location
+            loc = (steps[i]['end_location']['lat'], steps[i]['end_location']['lng'])
+            stops.append(loc)
+    return stops
+
+
+def get_stops_dist(place1, place2):
+    url = DIRECTIONS_URL_TEMPLATE.format(ORIGIN=place1, DESTINATION=place2)
+    response = requests.get(url).json()
+    routes = response['routes'][0]
+    legs = routes['legs'][0]
+    distance = legs['distance']['value'] # trip length in meters?
+    distance_str = legs['distance']['text']
+    max_num_stops = int(distance / 193121)# we will calculate a stop every ~120 miles which is 7200 seconds
+    steps = legs['steps'] #steps in the directions
+    stops = [] #list of stops
+    timer = 0 #variable to keep track of the seconds into the trip we are
+    num_stops = 0
+    for i in range(len(steps)):
+        timer += steps[i]['distance']['value'] #add the number of seconds this leg of the trip takes
+        if len(stops) >= max_num_stops: #we only want so many stops and don't want to have a stop too close to the end
+            break
+        # if we have surpassed another multiple of 193121 meters, it is time to add another stop
+        if int(timer/193121) > num_stops:
             num_stops += 1
             # add a stop by getting the lat and lon at this current location
             loc = (steps[i]['end_location']['lat'], steps[i]['end_location']['lng'])
