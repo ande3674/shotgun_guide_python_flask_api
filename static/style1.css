@@ -15,6 +15,10 @@
 body {
     background: lightblue;
     color: darkslategrey;
+    background-image: url("/static/img/road2.jpg");
+    background-repeat: no-repeat;
+    background-position: center;
+    background-attachment: fixed;
 }
 .form {
     border: 2px solid darkslategray;
@@ -23,6 +27,9 @@ body {
     padding: 14px;
     margin: 8px;
     background-image: url("/static/img/road.jpg");
+    background-repeat: no-repeat;
+    background-position: center;
+    background-attachment: fixed;
 }
 .origin {
     border: 1px solid darkslategray;
