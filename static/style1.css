@@ -17,29 +17,36 @@ body {
     color: darkslategrey;
 }
 .form {
-    border: 1px solid darkslategray;
+    border: 2px solid darkslategray;
     background-color: aliceblue;
-    padding: inherit;
+    border-style: outset;
+    padding: 14px;
+    margin: 8px;
+    background-image: url("/static/img/road.jpg");
 }
 .origin {
     border: 1px solid darkslategray;
     background-color: aliceblue;
-    padding: inherit;
+    padding: 14px;
+    margin: 8px;
 }
 .destination {
     border: 1px solid darkslategray;
     background-color: aliceblue;
-    padding: inherit;
+    padding: 14px;
+    margin: 8px;
 }
 .head {
     border: 1px solid darkslategray;
     background-color: aliceblue;
-    padding: inherit;
+    padding: 14px;
+    margin: 8px;
 }
 .stop{
     border: 1px solid darkslategray;
     background-color: aliceblue;
-    padding: inherit;
+    padding: 14px;
+    margin: 8px;
 }
 .stop li {
     font-size: 40px;
@@ -47,5 +54,6 @@ body {
 .foot {
     border: 1px solid darkslategray;
     background-color: aliceblue;
-    padding: inherit;
+    padding: 14px;
+    margin: 8px;
 }
