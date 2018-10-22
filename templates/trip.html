@@ -1,10 +1,11 @@
 {% extends "base.html" %}
 
 {% block content %}
-
-<h1 id="top">TRIP INFORMATION</h1>
-<h2>Total Distance: {{ distance }}</h2>
-<h2>Total Travel Time: {{ time }}</h2>
+<div class="head">
+    <h1 id="top">TRIP INFORMATION</h1>
+    <h2>Total Distance: {{ distance }}</h2>
+    <h2>Total Travel Time: {{ time }}</h2>
+</div>
     <hr/>
 <div class="origin">
     <h2>Starting Point: {{ city1 }}</h2>

@@ -15,7 +15,7 @@
 body {
     background: lightblue;
     color: darkslategrey;
-    background-image: url("/static/img/road2.jpg");
+    background-image: url("/static/img/road.jpg");
     background-repeat: no-repeat;
     background-position: center;
     background-attachment: fixed;
@@ -26,7 +26,7 @@ body {
     border-style: outset;
     padding: 14px;
     margin: 8px;
-    background-image: url("/static/img/road.jpg");
+    /*background-image: url("/static/img/road.jpg");*/
     background-repeat: no-repeat;
     background-position: center;
     background-attachment: fixed;
