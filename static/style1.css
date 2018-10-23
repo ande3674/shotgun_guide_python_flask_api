@@ -15,10 +15,10 @@
 body {
     background: lightblue;
     color: darkslategrey;
-    background-image: url("/static/img/road.jpg");
-    background-repeat: no-repeat;
+    background-image: url("/static/img/road2.jpg");
+    /*background-repeat: no-repeat;
     background-position: center;
-    background-attachment: fixed;
+    background-attachment: fixed;*/
 }
 .form {
     border: 2px solid darkslategray;

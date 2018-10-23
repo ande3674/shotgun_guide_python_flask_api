@@ -1,7 +1,6 @@
 from flask import Flask, request, render_template
 from apis import weather_api, maps_api, bing_api, places_api, unsplash_api
 from multiprocessing import Pool # TODO IMPLEMENT THIS!!!
-from googlemaps.client import geocode, reverse_geocode
 #from flask_bootstrap import Bootstrap
 
 app = Flask(__name__)
@@ -17,13 +16,11 @@ def home():
 def get_trip():
     try:
         GOOGLE_URL = 'https://www.google.com/search?q='
-        # Get info on the origin & destination locations: name, longitude and latitude
+        # Get info on the origin & destination locations: name
         origin = request.args.get('origin')
         dest = request.args.get('destination')
         activity_type = request.args.get('activity')
-        print(activity_type)
-        # origin_ditc = {'name':origin, 'lon':origin_lon, 'lat':origin_lat}
-        #dest_ditc = {'name': dest, 'lon': dest_lon, 'lat': dest_lat}
+        # Get info on the origin & destination locations: coordinates
         all_coords, distance, time = maps_api.get_origin_dest_coords(origin, dest)
         origin_coords = all_coords[0]
         dest_coords = all_coords[1]
@@ -33,7 +30,7 @@ def get_trip():
         # get a map for these places
         ourl = maps_api.get_static_map_of_place(origin)
         durl = maps_api.get_static_map_of_place(dest)
-        # todo get something to do for these places // PLACE_TYPE_LIST = [ 'restaurant', 'zoo', 'park', 'shopping_mall', 'museum' ]
+        # get something to do for these places // PLACE_TYPE_LIST = [ 'restaurant', 'zoo', 'park', 'shopping_mall', 'museum' ]
         otodo = places_api.get_place_name(origin_coords[0], origin_coords[1], 3)
         if activity_type=='restaurant':
             dtodo = places_api.get_place_name(dest_coords[0], dest_coords[1], 0)
@@ -52,31 +49,9 @@ def get_trip():
         ogoogle_link = GOOGLE_URL + split_up(origin + " " + otodo)
         dgoogle_link = GOOGLE_URL + split_up(dest + " " + dtodo)
 
-        # get information for the stops on this trip
-        # stops_in_between = maps_api.get_stops(origin, dest)
-        # stop_data_list = []
-        # for s in stops_in_between:
-        #     lat = s[0]
-        #     lon = s[1]
-        #     place_name=bing_api.reverse_geocode_place(lat, lon)
-        #     status1, status2, temp = weather_api.get_statuses_and_temp_at_coords(lat, lon)
-        #     url = maps_api.get_static_map_of_coords(lat, lon)
-        #     something_to_do = places_api.get_place_name(lat, lon)
-        #     google_link = GOOGLE_URL + split_up(place_name + " " + something_to_do)
-        #     stop_data = {'name':place_name, 'key':status1, 'description':status2, 'temp':temp, 'url':url, 'todo':something_to_do, 'google':google_link}
-        #     stop_data_list.append(stop_data)
-        #
-        # # build url for the main map of the entire trip, with markers
-        # all_stops = [origin_coords]
-        # for stop in stops_in_between:
-        #     all_stops.append(stop)
-        # all_stops.append(dest_coords)
-        # main_map_url = maps_api.build_main_map_url(all_stops)
-
         return render_template('trip.html', distance=distance, time=time,
                                city1=origin, key1=ostatus1, description1=ostatus2, temp1=otemp, url1=ourl, todo1=otodo, image1=oimage, google1=ogoogle_link,
                                city2=dest, key2=dstatus1, description2=dstatus2, temp2=dtemp, url2=durl, todo2=dtodo, image2=dimage, google2=dgoogle_link)
-                               #stops=stop_data_list)
 
     except IndexError:
         return render_template('error.html')
@@ -84,26 +59,29 @@ def get_trip():
 @app.route('/city')
 def get_city():
     GOOGLE_URL = 'https://www.google.com/search?q='
+    # Get origin, destination name and coordinates...
     origin = request.args.get('origin')
     dest = request.args.get('destination')
     all_coords, distance, time = maps_api.get_origin_dest_coords(origin, dest)
     origin_coords = all_coords[0]
     dest_coords = all_coords[1]
     # get information for the stops on this trip
+    # the map of all of the stops
     stops_in_between = maps_api.get_stops_dist(origin, dest)
     stop_data_list = []
+    # Gets name, weather, map, something to do, google link for each stop along the way
     for s in stops_in_between:
         lat = s[0]
         lon = s[1]
+        #print(str(lat) + " " + str(lon))
         place_name = bing_api.reverse_geocode_place(lat, lon)
         status1, status2, temp = weather_api.get_statuses_and_temp_at_coords(lat, lon)
         url = maps_api.get_static_map_of_coords(lat, lon)
-        something_to_do = places_api.get_place_name(lat, lon)
+        something_to_do = places_api.get_place_name(lat, lon, 0)
         google_link = GOOGLE_URL + split_up(place_name + " " + something_to_do)
         stop_data = {'name': place_name, 'key': status1, 'description': status2, 'temp': temp, 'url': url,
                      'todo': something_to_do, 'google': google_link}
         stop_data_list.append(stop_data)
-
     # build url for the main map of the entire trip, with markers
     all_stops = [origin_coords]
     for stop in stops_in_between:
