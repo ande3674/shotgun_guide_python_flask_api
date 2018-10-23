@@ -20,6 +20,8 @@ def get_trip():
         # Get info on the origin & destination locations: name, longitude and latitude
         origin = request.args.get('origin')
         dest = request.args.get('destination')
+        activity_type = request.args.get('activity')
+        print(activity_type)
         # origin_ditc = {'name':origin, 'lon':origin_lon, 'lat':origin_lat}
         #dest_ditc = {'name': dest, 'lon': dest_lon, 'lat': dest_lat}
         all_coords, distance, time = maps_api.get_origin_dest_coords(origin, dest)
@@ -31,9 +33,18 @@ def get_trip():
         # get a map for these places
         ourl = maps_api.get_static_map_of_place(origin)
         durl = maps_api.get_static_map_of_place(dest)
-        # get something to do for these places
+        # todo get something to do for these places // PLACE_TYPE_LIST = [ 'restaurant', 'zoo', 'park', 'shopping_mall', 'museum' ]
         otodo = places_api.get_place_name(origin_coords[0], origin_coords[1], 3)
-        dtodo = places_api.get_place_name(dest_coords[0], dest_coords[1], 4)
+        if activity_type=='restaurant':
+            dtodo = places_api.get_place_name(dest_coords[0], dest_coords[1], 0)
+        elif activity_type =='zoo':
+            dtodo = places_api.get_place_name(dest_coords[0], dest_coords[1], 1)
+        elif activity_type =='park':
+            dtodo = places_api.get_place_name(dest_coords[0], dest_coords[1], 2)
+        elif activity_type =='mall':
+            dtodo = places_api.get_place_name(dest_coords[0], dest_coords[1], 3)
+        else:
+            dtodo = places_api.get_place_name(dest_coords[0], dest_coords[1], 4)
         # get an image of the place
         oimage = unsplash_api.search_by_tag_return_link(origin)
         dimage = unsplash_api.search_by_tag_return_link(dest)

@@ -5,7 +5,7 @@ GOOGLE_KEY = 'AIzaSyCUzzNpRfSkRPbdOHtrjnlfCaCZ26cNKnc'
 PLACE_TYPE_LIST = [ 'restaurant', 'zoo', 'park', 'shopping_mall', 'museum' ]
 PLACE_SEARCH_URL = 'https://maps.googleapis.com/maps/api/place/nearbysearch/json?location={LATLON}&radius=3000' \
                    '&type={TYPE}&keyword={KEY}&key=AIzaSyCUzzNpRfSkRPbdOHtrjnlfCaCZ26cNKnc'
-PLACE_SEARCH_URL1 = 'https://maps.googleapis.com/maps/api/place/nearbysearch/json?location={LATLON}&radius=3000' \
+PLACE_SEARCH_URL1 = 'https://maps.googleapis.com/maps/api/place/nearbysearch/json?location={LATLON}&radius=17000' \
                    '&type={TYPE}&key=AIzaSyCUzzNpRfSkRPbdOHtrjnlfCaCZ26cNKnc'
 
 
@@ -25,13 +25,3 @@ def get_place_name(lat, lon, list_suggestion=0):
 
 def format_lat_lon(lat, lon):
     return str(lat) + "," + str(lon)
-
-# stops = maps_api.get_stops('minneapolis', 'chicago')
-# # p = get_place_name(stops[1][0], stops[1][1])
-# # print(p)
-# o = (4, 4)
-# d = (7, 7)
-# all = [o]
-# all.append(stops)
-# all.append(d)
-# print(all)
